@@ -90,6 +90,7 @@ export function createUI(opts) {
     <div class="sph-header">
       <div class="sph-header-dot"></div>
       <a class="sph-title" href="https://hjalgra.github.io/sph-fluid-sim/" target="_blank" rel="noopener">hjalgra.github.io/sph-fluid-sim</a>
+      <button class="sph-btn-minimize" id="btn-minimize" aria-label="Minimize panel">−</button>
     </div>
 
     <div class="sph-stats">
@@ -375,6 +376,13 @@ export function createUI(opts) {
 
   // ── Reset ──
   panel.querySelector('#btn-reset').addEventListener('click', reloadScene);
+
+  // ── Minimize toggle ──
+  const btnMinimize = panel.querySelector('#btn-minimize');
+  btnMinimize.addEventListener('click', () => {
+    const collapsed = panel.classList.toggle('collapsed');
+    btnMinimize.textContent = collapsed ? '+' : '−';
+  });
 
   // ── Canvas spawn (click / drag) ──────────────────────────────────────────
   let _spawning = false;
