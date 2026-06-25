@@ -1,0 +1,437 @@
+/* Dark glass / neon-on-dark control panel for SPH Simulator (themed via CSS vars) */
+
+/* ── Theme variables ── */
+:root,
+[data-theme="dark"] {
+  --accent:        #00c8ff;
+  --accent-rgb:    0, 200, 255;
+  --panel-bg:      rgba(8, 8, 20, 0.72);
+  --panel-border:  rgba(0, 200, 255, 0.18);
+  --text:          #d0e8ff;
+  --text-dim:      rgba(210, 230, 255, 0.72);
+  --label-dim:     rgba(0, 200, 255, 0.45);
+  --track:         rgba(0, 200, 255, 0.15);
+  --field-bg:      rgba(0, 200, 255, 0.07);
+  --field-border:  rgba(0, 200, 255, 0.22);
+  --section-line:  rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] {
+  --accent:        #0077b6;
+  --accent-rgb:    0, 119, 182;
+  --panel-bg:      rgba(238, 244, 250, 0.78);
+  --panel-border:  rgba(0, 119, 182, 0.25);
+  --text:          #102030;
+  --text-dim:      rgba(20, 40, 60, 0.78);
+  --label-dim:     rgba(0, 119, 182, 0.6);
+  --track:         rgba(0, 119, 182, 0.18);
+  --field-bg:      rgba(0, 119, 182, 0.08);
+  --field-border:  rgba(0, 119, 182, 0.3);
+  --section-line:  rgba(0, 0, 0, 0.07);
+}
+
+/* ── Page background follows theme ── */
+html[data-theme="light"], html[data-theme="light"] body { background: #dce6f0; }
+
+/* ── Panel shell ── */
+#sph-panel {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 292px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.08), 0 4px 32px rgba(0,0,0,0.6);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 12px;
+  user-select: none;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--accent-rgb), 0.25) transparent;
+}
+
+#sph-panel::-webkit-scrollbar { width: 4px; }
+#sph-panel::-webkit-scrollbar-track { background: transparent; }
+#sph-panel::-webkit-scrollbar-thumb { background: rgba(var(--accent-rgb), 0.3); border-radius: 4px; }
+
+/* ── Panel header ── */
+.sph-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.sph-header-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  flex-shrink: 0;
+}
+
+.sph-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(var(--accent-rgb), 0.5);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sph-title:hover {
+  text-decoration: underline;
+}
+
+/* ── Stats bar ── */
+.sph-stats {
+  display: flex;
+  gap: 4px;
+  padding: 7px 14px;
+  background: rgba(var(--accent-rgb), 0.04);
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.09);
+}
+
+.sph-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sph-stat-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(var(--accent-rgb), 0.55);
+}
+
+.sph-stat-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(var(--accent-rgb), 0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Section ── */
+.sph-section {
+  padding: 10px 14px 4px;
+  border-bottom: 1px solid var(--section-line);
+}
+
+.sph-section:last-child { border-bottom: none; }
+
+.sph-section-title {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--label-dim);
+  margin-bottom: 8px;
+}
+
+/* ── Row layout ── */
+.sph-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.sph-label {
+  flex: 0 0 84px;
+  color: var(--text-dim);
+  font-size: 11px;
+}
+
+/* ── Toggle buttons (mode / color-by / preset / theme) ── */
+.sph-toggle-group {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.sph-btn-toggle {
+  flex: 1;
+  padding: 4px 0;
+  border-radius: 5px;
+  border: 1px solid var(--field-border);
+  background: var(--field-bg);
+  color: rgba(var(--accent-rgb), 0.6);
+  font-size: 10.5px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  text-align: center;
+}
+
+.sph-btn-toggle:hover {
+  background: rgba(var(--accent-rgb), 0.14);
+  color: var(--accent);
+}
+
+.sph-btn-toggle.active {
+  background: rgba(var(--accent-rgb), 0.2);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  color: var(--accent);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.25);
+}
+
+/* ── Slider (dynamic fill via background gradient set in JS) ── */
+.sph-slider-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sph-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--track);
+  outline: none;
+  cursor: pointer;
+}
+
+.sph-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.7);
+  cursor: pointer;
+  border: none;
+}
+
+.sph-slider::-moz-range-thumb {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.7);
+  cursor: pointer;
+  border: none;
+}
+
+.sph-val {
+  min-width: 38px;
+  text-align: right;
+  font-size: 10.5px;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── Compass dial (gravity direction) ── */
+.sph-compass-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+
+.sph-compass {
+  width: 64px;
+  height: 64px;
+  cursor: grab;
+  flex-shrink: 0;
+  touch-action: none;
+}
+
+.sph-compass:active { cursor: grabbing; }
+
+.sph-compass-ring {
+  fill: var(--field-bg);
+  stroke: var(--field-border);
+  stroke-width: 1.5;
+}
+
+.sph-compass-tick { stroke: rgba(var(--accent-rgb), 0.35); stroke-width: 1; }
+
+.sph-compass-needle {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(var(--accent-rgb), 0.8));
+}
+
+.sph-compass-hub {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 3px rgba(var(--accent-rgb), 0.8));
+}
+
+.sph-compass-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sph-compass-info .sph-label { flex: none; }
+
+.sph-compass-angle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(var(--accent-rgb), 0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Custom dropdown (dark, themed) ── */
+.sph-dropdown { flex: 1; position: relative; }
+
+.sph-dropdown-btn {
+  width: 100%;
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 11px;
+  padding: 5px 22px 5px 8px;
+  cursor: pointer;
+  outline: none;
+  text-align: left;
+  position: relative;
+}
+
+.sph-dropdown-btn::after {
+  content: '';
+  position: absolute;
+  right: 8px; top: 50%;
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--accent);
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+.sph-dropdown-btn:focus,
+.sph-dropdown.open .sph-dropdown-btn {
+  border-color: rgba(var(--accent-rgb), 0.5);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.2);
+}
+
+.sph-dropdown-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--field-border);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.sph-dropdown.open .sph-dropdown-list { display: block; }
+
+.sph-dropdown-opt {
+  padding: 6px 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.sph-dropdown-opt:hover { background: rgba(var(--accent-rgb), 0.15); color: var(--accent); }
+.sph-dropdown-opt.selected { color: var(--accent); background: rgba(var(--accent-rgb), 0.1); }
+
+/* ── Playback button row ── */
+.sph-playback-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.sph-btn {
+  flex: 1;
+  padding: 6px 0;
+  border-radius: 6px;
+  border: 1px solid var(--field-border);
+  background: var(--field-bg);
+  color: rgba(var(--accent-rgb), 0.78);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.03em;
+}
+
+.sph-btn:hover {
+  background: rgba(var(--accent-rgb), 0.15);
+  color: var(--accent);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.2);
+}
+
+.sph-btn.active {
+  background: rgba(var(--accent-rgb), 0.22);
+  border-color: rgba(var(--accent-rgb), 0.55);
+  color: var(--accent);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
+}
+
+/* Reset button — warm accent (theme-independent) */
+.sph-btn-reset {
+  width: 100%;
+  padding: 6px 0;
+  border-radius: 6px;
+  border: 1px solid rgba(255,80,80,0.3);
+  background: rgba(255,60,60,0.07);
+  color: rgba(220,60,60,0.85);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+
+.sph-btn-reset:hover {
+  background: rgba(255,60,60,0.16);
+  color: #ff6060;
+  box-shadow: 0 0 8px rgba(255,60,60,0.25);
+}
+
+/* ── Colormap buttons (gradient-filled, no text) ── */
+.sph-cmap-group {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+
+.sph-cmap-btn {
+  flex: 1;
+  height: 23px;
+  box-sizing: border-box;
+  padding: 0;
+  border-radius: 5px;
+  border: 1px solid var(--field-border);
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.sph-cmap-btn:hover {
+  border-color: rgba(var(--accent-rgb), 0.5);
+}
+
+.sph-cmap-btn.active {
+  border-color: rgba(var(--accent-rgb), 0.8);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.5);
+}
