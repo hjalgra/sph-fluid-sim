@@ -51,7 +51,7 @@ export function createUI(opts) {
 
   // ---- Physics / scene state ----
   const phys  = { gravMag: 9.81, gravDir: 270, viscosity: 0.1 };
-  const scene = { name: 'dam-break', preset: 'med' };
+  const scene = { name: 'dam-break', preset: 'low' };
 
   // ── Helpers ─────────────────────────────────────────────────────────────
 
@@ -122,8 +122,8 @@ export function createUI(opts) {
       <div class="sph-row">
         <span class="sph-label">Appearance</span>
         <div class="sph-toggle-group" id="tg-theme">
-          <button class="sph-btn-toggle active" data-val="dark">Dark</button>
-          <button class="sph-btn-toggle" data-val="light">Light</button>
+          <button class="sph-btn-toggle" data-val="dark">Dark</button>
+          <button class="sph-btn-toggle active" data-val="light">Light</button>
         </div>
       </div>
       <div class="sph-row">
@@ -193,8 +193,8 @@ export function createUI(opts) {
       <div class="sph-row">
         <span class="sph-label">Particles</span>
         <div class="sph-toggle-group" id="tg-preset">
-          <button class="sph-btn-toggle" data-val="low">Low</button>
-          <button class="sph-btn-toggle active" data-val="med">Med</button>
+          <button class="sph-btn-toggle active" data-val="low">Low</button>
+          <button class="sph-btn-toggle" data-val="med">Med</button>
           <button class="sph-btn-toggle" data-val="high">High</button>
         </div>
       </div>
@@ -242,7 +242,7 @@ export function createUI(opts) {
     if (setCanvasTheme) setCanvasTheme(theme);
   }
   wireToggle('tg-theme', applyTheme);
-  applyTheme('dark'); // default
+  applyTheme('light'); // default
 
   // ── Walls toggle (show/hide boundary particles) ──
   wireToggle('tg-walls', val => {

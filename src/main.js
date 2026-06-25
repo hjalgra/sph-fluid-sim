@@ -26,7 +26,7 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 // ---- Simulation ----
-let engine = createEngineForScene('dam-break', { preset: 'med' });
+let engine = createEngineForScene('dam-break', { preset: 'low' });
 warmUp(engine);
 
 // ---- Renderer ----
