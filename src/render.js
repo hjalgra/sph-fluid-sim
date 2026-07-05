@@ -35,7 +35,7 @@ const SPEED_MAX    = 5;      // m/s
 const PRESSURE_MAX = 12000;  // Pa
 
 // Active LUT — rebuilt by setColormap(); shared by particle and continuum modes.
-let LUT = buildLUT('viridis', 256);
+let LUT = buildLUT('turbo', 256);
 
 // Muted gray-blue used for boundary particles when walls are shown
 const WALL_COLOR = 'rgba(100,120,150,0.55)';

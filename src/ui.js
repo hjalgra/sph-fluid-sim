@@ -137,9 +137,9 @@ export function createUI(opts) {
       <div class="sph-row">
         <span class="sph-label">Colormap</span>
         <div class="sph-cmap-group" id="cmap-group">
-          <button class="sph-cmap-btn active" data-cmap="viridis"  aria-label="Viridis"></button>
+          <button class="sph-cmap-btn"        data-cmap="viridis"  aria-label="Viridis"></button>
           <button class="sph-cmap-btn"        data-cmap="inferno"  aria-label="Inferno"></button>
-          <button class="sph-cmap-btn"        data-cmap="turbo"    aria-label="Turbo"></button>
+          <button class="sph-cmap-btn active" data-cmap="turbo"    aria-label="Turbo"></button>
           <button class="sph-cmap-btn"        data-cmap="coolwarm" aria-label="Coolwarm"></button>
         </div>
       </div>
@@ -211,8 +211,8 @@ export function createUI(opts) {
       <div class="sph-row">
         <span class="sph-label">Time scale</span>
         <div class="sph-slider-wrap">
-          <input id="sl-timescale" class="sph-slider" type="range" min="0.1" max="8" step="0.05" value="1">
-          <span class="sph-val" id="val-timescale">1.0×</span>
+          <input id="sl-timescale" class="sph-slider" type="range" min="0.1" max="8" step="0.05" value="4">
+          <span class="sph-val" id="val-timescale">4.0×</span>
         </div>
       </div>
       <button class="sph-btn-reset" id="btn-reset">↺ Reset Scene</button>

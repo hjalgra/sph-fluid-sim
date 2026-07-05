@@ -38,7 +38,7 @@ window.__engine   = engine;
 
 // ---- Run state ----
 let running   = true;
-let timeScale = 1.0;
+let timeScale = 4.0;
 
 // Base substep budget per RAF frame (scaled by timeScale).
 // 2 substeps keeps total physics budget under 16ms at high preset.
